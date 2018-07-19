@@ -209,6 +209,8 @@ class Pages
         $this->instances = [];
         $this->children = [];
         $this->routes = [];
+        
+        Grav::instance()->fireEvent('onBeforeBuildPages', new Event(['pages' => $this]));
 
         $this->buildPages();
     }
@@ -244,8 +246,11 @@ class Pages
      *
      * @return array
      */
-    public function routes()
+    public function routes($var=null)
     {
+        if ($var !== null) {
+            $this->routes = (array)$var;
+        }
         return $this->routes;
     }
 
